@@ -1,3 +1,3 @@
 # This is my CLI project
 
-some info
+You can find several versions of my bot in separated folders
