@@ -15,7 +15,7 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, phone):
-        if Phone.is_valid(phone):
+        if self.is_valid(phone):
             super().__init__(phone)
         else:
             raise ValueError

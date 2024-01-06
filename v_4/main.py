@@ -35,7 +35,7 @@ class Phone(Field):
     
     @value.setter
     def value(self, new_value):
-        Phone.is_valid(new_value)
+        self.is_valid(new_value)
         self._value = new_value
 
     @staticmethod   
@@ -60,7 +60,7 @@ class Birthday(Field):
     
     @value.setter
     def value(self, new_value):
-        Birthday.is_valid(new_value)
+        self.is_valid(new_value)
         self._value = new_value
 
 
