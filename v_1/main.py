@@ -34,14 +34,21 @@ def command_handler(user_input: str):
         phone = input_lst[2]
 
         if command.startswith('add'):
-            return add(phone_book, name, phone)
+            result =  add(phone_book, name, phone)
+            if not isinstance(result, tuple):
+                result = (result, None)
+            return result
         
         elif command.startswith('change'):
-            return change(phone_book, name, phone)
-        
+            result = change(phone_book, name, phone)
+            if not isinstance(result, tuple):
+                result = (result, None)
+            return result
         elif command.startswith('phone'):
-            return phone(phone_book, name)
-    
+            result = phone(phone_book, name)
+            if not isinstance(result, tuple):
+                result = (result, None)
+            return result
 
 
 def input_error(func):
@@ -50,20 +57,20 @@ def input_error(func):
             result =  func(*args, **kwargs)
             return result
         except KeyError:
-            return ('Give me name', None)
+            return 'Give me name'
         except ValueError:
-            return ('Give me phone', None)
+            return 'Give me phone'
         except IndexError:
-            return ('This person is not registered', None)
+            return 'This person is not registered'
     return wrapper
 
 
 @ input_error
 def add(p_b, name, phone):
-    if name == None:
+    if name is None:
         raise KeyError
     
-    if phone == None:
+    if phone is None:
         raise ValueError
     
     p_b[name] = phone
@@ -71,10 +78,10 @@ def add(p_b, name, phone):
 
 @ input_error
 def change(p_b, name, phone):
-    if name == None:
+    if name is None:
         raise KeyError
     
-    if phone == None:
+    if phone is None:
         raise ValueError
     
     p_b[name] = phone
@@ -83,7 +90,7 @@ def change(p_b, name, phone):
 
 @ input_error
 def phone(p_b, name):
-    if name == None:
+    if name is None:
         raise IndexError
     
     return (p_b[name], None)
