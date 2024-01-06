@@ -1,10 +1,6 @@
 from collections import UserDict
 
 
-class PhoneError(Exception):
-    pass
-
-
 class Field:
     def __init__(self, value):
         self.value = value
@@ -22,19 +18,22 @@ class Phone(Field):
         if Phone.is_valid(phone):
             super().__init__(phone)
         else:
-            raise PhoneError
+            raise ValueError
 
     @staticmethod   
     def is_valid(phone):
 
-        if len(phone) == 10 and str(phone).isdigit():
-            return True
-        else:
+        if not len(phone) == 10:
             return False
+        
+        for i in phone:
+            if not i.isdigit():
+                return False
+            
+        return True
+
 
         
-
-
 class Record:
     def __init__(self, name, phone=None):
         self.name = Name(name)
@@ -55,7 +54,10 @@ class Record:
         for i, ph in enumerate(self.phones):
             if ph.value == old_phone:
                 self.phones[i] =  Phone(new_phone)
-
+                return
+            
+        raise ValueError
+    
     def find_phone(self, phone):
         for ph in self.phones:
             if ph.value == phone:
@@ -80,24 +82,8 @@ class AddressBook(UserDict):
     def delete(self, name):
         for key in self.data:
             if key == name:
-                return self.data[key]
+                del self.data[key]
+                return 
             
     def __str__(self):
         return str([str(i) for i in self.data.values()])
-
-
-# if __name__ == '__main__':
-#     jane_record = Record('Jane')
-#     jane_record.add_phone('2222222222')
-#     jane_record.add_phone('1111111111')
-
-#     martin_record = Record("Martin", '1111111111')
-#     martin_record.add_phone('8888888888')
-
-
-
-#     book = AddressBook()
-#     book.add_record(jane_record)
-#     book.add_record(martin_record)
-#     print(book)
-#     print(book.find('Jane'))
