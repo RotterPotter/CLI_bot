@@ -121,7 +121,7 @@ class Record:
 
 class AddressBook(UserDict):
     def __init__(self):
-        self.data = {}
+        super().__init__()
 
     def __iter__(self, n=5):
         data_values = list(self.data.values())

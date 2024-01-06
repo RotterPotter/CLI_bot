@@ -69,7 +69,7 @@ class Record:
 
 class AddressBook(UserDict):
     def __init__(self):
-        self.data = {}
+        super().__init__()
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
